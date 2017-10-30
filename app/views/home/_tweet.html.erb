@@ -1,0 +1,36 @@
+<div class="tweet">
+  <div class="userImage inline">
+    <div class="dummy">
+      <img class="tweetImage" src="<%=tweet.user.profile_picture_url%>">
+    </div>
+  </div>
+
+  <div class="content inline">
+    <div class="userDetails">
+      <div class="username inline"><a href="/profile/<%=tweet.user.id%>"><%= tweet.user.name %></a></div>
+      <div class="time inline"><%= tweet.created_at.to_formatted_s(:short) %></div>
+    </div>
+    <div class="tweetContent"><%= tweet.content %></div>
+    <div class="reactions">
+    <% if Tweet.find(tweet.id).user_id != current_user.id %>
+      <i class="fa fa-thumbs-o-up" aria-hidden="true" style="font-size: 22px; color: black;"><%= tweet.likes.count %></i>
+          <% if tweet.likes.where(user_id: current_user.id).length > 0 %>
+          <%= link_to "Unlike", url_for(controller: :home, action: :like, tweet_id: tweet.id), method: :post, class: 'tweet_like_link', id: "tweet_#{tweet.id}", class: "btn small-btn" %>
+
+      <% else %>
+          <%= link_to "Like", url_for(controller: :home, action: :like, tweet_id: tweet.id), method: :post, class: 'tweet_like_link', id: "tweet_#{tweet.id}", class: "btn small-btn" %>
+      <% end %>
+    <% end %>
+
+<% if current_user.admin? || (current_user.id == tweet.user_id) %>
+      <%= link_to 'Delete', url_for(controller: :home, action: :delete_tweet, tweet_id: tweet.id), method: :delete, class: "btn small-btn" %>
+
+
+      <% end %>
+    </div>
+
+
+  </div>
+
+
+</div>

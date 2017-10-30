@@ -1,0 +1,67 @@
+<section id="mainSection" id="top">
+  <aside id="mainAside" class="userInfo">
+    
+      <div class="card">
+        <div class="card-content" style="padding: 0px;">
+          <%= image_tag current_user.profile_picture_url, class: "profile_picture" %>
+        </div>
+        <div class="card-tabs">
+          <ul class="tabs">
+            <li class="tab"><a class="active" href="#username">Name</a></li>
+            <li class="tab"><a href="#followers">Followers</a></li>
+            <li class="tab"><a href="#following">Following</a></li>
+          </ul>
+        </div>
+        <div class="card-content grey lighten-4">
+          <div id="username"><%=current_user.name%></div>
+          <div id="followers"><%=current_user.followers.count%></div>
+          <div id="following"><%=current_user.followees.count%></div>
+        </div>
+      </div>
+  </aside>
+  <main id="mainMain">
+<div class="form white hoverable z-depth-2">
+<p class="form-heading">Update Profile <%= resource_name.to_s.humanize %></p>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+  
+  <div class="field">
+    <%= f.label "Name" %><br />
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update", class: "btn greenish" %>
+    <%= link_to "Update Profile Picture", update_picture_path, method: "get", class: "btn greenish" %>
+  </div>
+<% end %>
+</br>
+<%= link_to "Delete Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn" %>
+
+</div>
+</main>
+</section>

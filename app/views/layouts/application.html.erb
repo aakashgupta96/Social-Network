@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TwitterProject</title>
+  <%= stylesheet_link_tag 'application', media: 'all'%>
+  <%= javascript_include_tag 'application'%>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+<div id="cover">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<nav class="radial-gradient">
+      <div class="nav-wrapper container-wide no-pad" id="nav-container">
+        <a href="/" class="brand-logo"><i class="fa fa-twitter" style="font-size: 32px; color: white;" aria-hidden="true">Twitter</i></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse white-text"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/" class="nav-option center-align">Home</a></li>
+          <% if user_signed_in? %>
+            <li><a href="/profile/<%=current_user.id%>" class="nav-option center-align">Profile</a></li>
+            <li>
+              <div class='dropdown-button waves-effect waves-light btn greenish' data-activates='dropdown2' style="max-width : 220px;">
+                <i class="material-icons left relative" style="top:-13px;">perm_identity</i><%=current_user.name.split.first %>
+              </div>
+              <ul id='dropdown2' class='dropdown-content'>
+                <li><%= link_to "Account Settings", edit_user_registration_path%></li>
+                <li class="divider"></li>
+                <li><a href="/users/sign_out" data-confirm="Are you sure?" data-method="DELETE">Log Out</a></li>
+              </ul>
+            </li>
+          <% else %>
+            <li><a href="/users/sign_in" class="nav-option session_button waves-effect waves-light btn greenish row"><i class="fa fa-facebook-official col s2 relative" aria-hidden="true" style="font-size: 30px; bottom: 14px; right: 30px; "></i><span class="col s9 relative" style="left: 5px;">Log In</span></a></li>
+          <% end %>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="/">Home</a></li>
+          <% if user_signed_in? %>
+            <li><a href="/profile/<%=current_user.id%>">Profile</a></li>
+            <li><%= link_to "Account Settings", edit_user_registration_path%></li>
+          <% end %>
+          <% if user_signed_in? %>
+            <li><a href="/users/sign_out" class="waves-effect waves-light btn greenish" data-confirm="Are you sure?" data-method="DELETE">Log Out</a></li>
+          <% else %>
+            <li><a href="/users/sing_in" class="waves-effect waves-light btn greenish">Log In with FB</a></li>
+          <% end %>
+        </ul>
+      </div>
+  </nav>
+  
+<% unless notice.nil? %>
+  <script>
+    noty({ text: "<%=notice%>",timeout: 5000, theme: "relax", type: 'information', layout: 'topRight' });
+  </script>
+<% end %>
+<% unless alert.nil? %>
+  <script >
+    noty({ text: "<%=alert%>",timeout: 5000, theme: "relax", type: 'information', layout: 'topRight' });
+  </script>
+<% end %>
+
+<%= yield %>
+
+
+
+<div class="floatingTop"><a href="#top" id="toTop" style="background-color: transparent;"><img src="/anchor_top.png" style="height: 42px; width: 50px; vertical-align: top;"></a></div>
+
+
+</body>
+</html>
